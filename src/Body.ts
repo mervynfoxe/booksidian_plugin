@@ -14,6 +14,6 @@ export class Body {
 	public getBody(): string {
 		const render = Mustache.render(this.currentBody, this.book) as string;
 
-		return render.replaceAll("&#x2F;", "/");
+		return render.replaceAll("&#x2F;", "/").replaceAll("&#39;", "'");
 	}
 }

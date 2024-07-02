@@ -40,7 +40,7 @@ export class Book {
 		this.rawTitle = book.title;
 		this.fullTitle = this.cleanTitle(book.title, true);
 		this.description = this.htmlToMarkdown(book.book_description);
-		this.author = book.author;
+		this.author = this.cleanAuthor(book.author);
 		this.isbn = book.isbn;
 		this.review = this.htmlToMarkdown(book.user_review || "");
 		this.rating = parseInt(book.user_rating) || 0;
@@ -142,6 +142,13 @@ export class Book {
 		title = title.replace(/[&\/\\#,+()$~%.'":*?<>{}|]/g, "");
 
 		return title.trim();
+	}
+
+	private cleanAuthor(author: string) {
+		// remove multiple (sometimes invisible) spaces from author names
+		author = author.replace(/\s+/g,' ');
+
+		return author.trim();
 	}
 
 	private getSeries(title: string): string {
